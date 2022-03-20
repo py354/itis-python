@@ -15,10 +15,10 @@ class TreeNode(Map):
         """ Рекурсивное вычисление размера """
         result = 1
 
-        if self.left_node is not None:
+        if self.left_node:
             result += len(self.left_node)
 
-        if self.right_node is not None:
+        if self.right_node:
             result += len(self.right_node)
 
         return result
@@ -31,15 +31,15 @@ class TreeNode(Map):
             return
 
         if self.key > key:
-            if self.left_node is None:
-                self.left_node = TreeNode(key, value)
-            else:
+            if self.left_node:
                 self.left_node[key] = value
-        else:
-            if self.right_node is None:
-                self.right_node = TreeNode(key, value)
             else:
+                self.left_node = TreeNode(key, value)
+        else:
+            if self.right_node:
                 self.right_node[key] = value
+            else:
+                self.right_node = TreeNode(key, value)
 
     def __delitem__(self, key):
         """ Рекурсивное удаление элемента """
@@ -66,27 +66,23 @@ class TreeNode(Map):
         if self.key == key:
             return self.value
 
-        if self.key > key:
-            if self.left_node is None:
-                return None
+        if self.key > key and self.left_node:
             return self.left_node[key]
-        else:
-            if self.right_node is None:
-                return None
+        elif self.right_node:
             return self.right_node[key]
+        return None
 
     def sorted_range(self):
         """ Итератор по отсортированным ключам """
 
-        if self.left_node is not None:
-            for item in self.left_node.sorted_range():
-                yield item
+        if self.left_node:
+            yield from self.left_node.sorted_range()
 
         yield self.key, self.value
 
-        if self.right_node is not None:
-            for item in self.right_node.sorted_range():
-                yield item
+        if self.right_node:
+            yield from self.right_node.sorted_range()
+
     __iter__ = sorted_range
 
     @staticmethod
@@ -112,15 +108,15 @@ class TreeMap(Map):
     def __len__(self):
         """ Рекурсивное вычисление размера """
 
-        if self.root is None:
-            return 0
-        else:
+        if self.root:
             return len(self.root)
+        else:
+            return 0
 
     def __setitem__(self, key, value):
         """ Рекурсивное установка элемента """
 
-        if self.root is not None:
+        if self.root:
             self.root[key] = value
         else:
             self.root = TreeNode(key, value)
@@ -140,7 +136,7 @@ class TreeMap(Map):
     def __getitem__(self, key):
         """ Рекурсивный поиск элемента """
 
-        if self.root is not None:
+        if self.root:
             return self.root[key]
         raise KeyError
 

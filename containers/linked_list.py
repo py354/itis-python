@@ -24,17 +24,17 @@ class LinkedList:
         """ Добавление в конец """
         self.length += 1
 
-        if self.tail is None:
-            self.head = ListNode(key, value)
-            self.tail = self.head
-        else:
+        if self.tail:
             self.tail.next_node = ListNode(key, value)
             self.tail = self.tail.next_node
+        else:
+            self.head = ListNode(key, value)
+            self.tail = self.head
 
     def get(self, key) -> Optional[ListNode]:
         """ Получение узла по ключу """
         node = self.head
-        while node is not None:
+        while node:
             if node.key == key:
                 return node
             node = node.next_node
@@ -42,7 +42,7 @@ class LinkedList:
 
     def __iter__(self):
         node = self.head
-        while node is not None:
+        while node:
             yield node.key, node.value
             node = node.next_node
 
@@ -63,7 +63,7 @@ class LinkedList:
 
         # если искомый элемент - не первый
         node = self.head
-        while node.next_node is not None:
+        while node.next_node:
             next_node = node.next_node
             if next_node.key == key:
                 self.length -= 1

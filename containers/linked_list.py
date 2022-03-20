@@ -40,6 +40,12 @@ class LinkedList:
             node = node.next_node
         return None
 
+    def __iter__(self):
+        node = self.head
+        while node is not None:
+            yield node.key, node.value
+            node = node.next_node
+
     def delete(self, key) -> bool:
         """ Удаление узла по ключу """
         if self.head is None:

@@ -22,8 +22,11 @@ class MapTestMixin(unittest.TestCase):
         self.assertEqual(len(self.map), 0)
 
     def test_raise_key_error(self):
+        self.map[1] = 10
+        self.map[2] = 20
+        self.map[3] = 30
         with self.assertRaises(KeyError):
-            i = self.map[1]
+            _ = self.map[4]
 
 
 class HashMapTest(MapTestMixin, unittest.TestCase):

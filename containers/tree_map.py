@@ -70,7 +70,7 @@ class TreeNode(Map):
             return self.left_node[key]
         elif self.right_node:
             return self.right_node[key]
-        return None
+        raise KeyError
 
     def sorted_range(self):
         """ Итератор по отсортированным ключам """

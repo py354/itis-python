@@ -9,6 +9,15 @@ class MapTestMixin(unittest.TestCase):
     def setUp(self):
         self.map = dict()
 
+    def test_iterator(self):
+        self.assertEqual(len(list(self.map)), 0)
+
+        self.map[1] = 10
+        self.assertEqual(len(list(self.map)), 1)
+
+        del self.map[1]
+        self.assertEqual(len(list(self.map)), 0)
+
     def test_map_methods(self):
         self.map[1] = 10
         self.assertEqual(self.map[1], 10)

@@ -1,4 +1,5 @@
-from typing import Optional
+import typing
+from typing import Optional, Iterable
 from containers.interfaces import Map
 
 
@@ -72,7 +73,7 @@ class TreeNode(Map):
             return self.right_node[key]
         raise KeyError
 
-    def sorted_range(self):
+    def sorted_range(self) -> Iterable:
         """ Итератор по отсортированным ключам """
 
         if self.left_node:
@@ -140,10 +141,10 @@ class TreeMap(Map):
             return self.root[key]
         raise KeyError
 
-    def sorted_range(self):
+    def sorted_range(self) -> Iterable:
         """ Итератор по отсортированным ключам """
 
         if self.root:
             return self.root.sorted_range()
-        return StopIteration
+        return iter([])
     __iter__ = sorted_range

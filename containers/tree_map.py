@@ -48,14 +48,14 @@ class TreeNode(Map):
 
         if self.key > key:
             if self.left_node is None:
-                return
+                raise KeyError
             elif self.left_node.key == key:
                 self.left_node = TreeNode.union(self.left_node.left_node, self.left_node.right_node)
             else:
                 del self.left_node[key]
         else:
             if self.right_node is None:
-                return
+                raise KeyError
             elif self.right_node.key == key:
                 self.right_node = TreeNode.union(self.right_node.left_node, self.right_node.right_node)
             else:
@@ -125,7 +125,7 @@ class TreeMap(Map):
         """ Рекурсивное удаление элемента """
 
         if self.root is None:
-            return
+            raise KeyError
 
         if self.root.key == key:
             # если нужно удалить корень

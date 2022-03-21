@@ -28,6 +28,14 @@ class MapTestMixin(unittest.TestCase):
         with self.assertRaises(KeyError):
             _ = self.map[4]
 
+        with self.assertRaises(KeyError):
+            del self.map[4]
+
+        del self.map[1]
+
+        with self.assertRaises(KeyError):
+            del self.map[1]
+
 
 class HashMapTest(MapTestMixin, unittest.TestCase):
     def setUp(self):

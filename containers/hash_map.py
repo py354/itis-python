@@ -47,6 +47,8 @@ class HashMap(Map):
 
             if self.length / self.capacity < HashMap.LOAD_FACTOR_TO_DECREASE:
                 self.__resize(self.capacity // 2)
+        else:
+            raise KeyError
 
     def __getitem__(self, key):
         """ Получение элемента по ключу """

@@ -1,12 +1,18 @@
+""" Тесты для LinkedList """
+
 import unittest
 from containers.linked_list import LinkedList
 
 
 class LinkedListTest(unittest.TestCase):
+    """ Тесты для LinkedList """
+
     def setUp(self) -> None:
         self.list = LinkedList()
 
     def test(self):
+        """ Тесты для LinkedList """
+
         self.list.append('key', 'value')
         self.assertEqual(self.list.length, 1)
         self.assertEqual(self.list.get('key').value, 'value')
@@ -22,6 +28,7 @@ class LinkedListTest(unittest.TestCase):
         self.assertEqual(self.list.get('key'), None)
 
         self.assertEqual(list(self.list), [('key2', 'value2')])
+
 
 if __name__ == '__main__':
     unittest.main()

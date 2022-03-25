@@ -1,6 +1,8 @@
+""" Реализация Map на основе хеш-таблицы из ячеек LinkedList """
+
 from typing import List
-from containers.interfaces import Map
-from containers.linked_list import LinkedList
+from interfaces import Map
+from linked_list import LinkedList
 
 
 class HashMap(Map):

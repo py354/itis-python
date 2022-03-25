@@ -1,7 +1,11 @@
+""" Интерфейсы контейнеров """
+
 from abc import ABC, abstractmethod
 
 
 class Map(ABC):
+    """ Интерфейс Map """
+
     @abstractmethod
     def __setitem__(self, key, value):
         pass
@@ -13,4 +17,3 @@ class Map(ABC):
     @abstractmethod
     def __getitem__(self, item):
         pass
-

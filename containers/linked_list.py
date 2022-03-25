@@ -1,4 +1,6 @@
-from typing import Optional, Any
+""" Реализация LinkedList для использования в HashMap """
+
+from typing import Optional
 
 
 class ListNode:
@@ -7,6 +9,10 @@ class ListNode:
         self.key = key
         self.value = value
         self.next_node: Optional[ListNode] = None
+
+    def set_next_node(self, next_node: Optional['ListNode']):
+        """ Устанавливает следующий узел в списке """
+        self.next_node = next_node
 
     def __eq__(self, other) -> bool:
         return self.key == other.key
@@ -25,7 +31,7 @@ class LinkedList:
         self.length += 1
 
         if self.tail:
-            self.tail.next_node = ListNode(key, value)
+            self.tail.set_next_node(ListNode(key, value))
             self.tail = self.tail.next_node
         else:
             self.head = ListNode(key, value)
@@ -69,7 +75,7 @@ class LinkedList:
                 self.length -= 1
                 if next_node == self.tail:
                     self.tail = node
-                node.next_node = next_node.next_node
+                node.set_next_node(next_node.next_node)
                 return True
             node = node.next_node
 

@@ -1,6 +1,7 @@
-import typing
+""" Реализация Map с бинарным деревом """
+
 from typing import Optional, Iterable
-from containers.interfaces import Map
+from interfaces import Map
 
 
 class TreeNode(Map):
@@ -50,15 +51,18 @@ class TreeNode(Map):
         if self.key > key:
             if self.left_node is None:
                 raise KeyError
-            elif self.left_node.key == key:
+
+            if self.left_node.key == key:
                 self.left_node = TreeNode.union(self.left_node.left_node, self.left_node.right_node)
             else:
                 del self.left_node[key]
         else:
             if self.right_node is None:
                 raise KeyError
-            elif self.right_node.key == key:
-                self.right_node = TreeNode.union(self.right_node.left_node, self.right_node.right_node)
+
+            if self.right_node.key == key:
+                union = TreeNode.union(self.right_node.left_node, self.right_node.right_node)
+                self.right_node = union
             else:
                 del self.right_node[key]
 
@@ -69,8 +73,10 @@ class TreeNode(Map):
 
         if self.key > key and self.left_node:
             return self.left_node[key]
-        elif self.right_node:
+
+        if self.right_node:
             return self.right_node[key]
+
         raise KeyError
 
     def sorted_range(self) -> Iterable:
@@ -111,8 +117,8 @@ class TreeMap(Map):
 
         if self.root:
             return len(self.root)
-        else:
-            return 0
+
+        return 0
 
     def __setitem__(self, key, value):
         """ Рекурсивное установка элемента """

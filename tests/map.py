@@ -1,15 +1,19 @@
-from containers.hash_map import HashMap
-from containers.tree_map import TreeMap
+""" Тесты для Map """
 
 import unittest
+
+from containers.hash_map import HashMap
+from containers.tree_map import TreeMap
 
 
 class MapTestMixin(unittest.TestCase):
     """ Тесты реализации Map (setitem, getitem, delitem) """
     def setUp(self):
-        self.map = dict()
+        self.map = {}
 
     def test_iterator(self):
+        """ Docstring """
+
         self.assertEqual(len(list(self.map)), 0)
 
         self.map[1] = 10
@@ -19,6 +23,8 @@ class MapTestMixin(unittest.TestCase):
         self.assertEqual(len(list(self.map)), 0)
 
     def test_map_methods(self):
+        """ Docstring """
+
         self.map[1] = 10
         self.assertEqual(self.map[1], 10)
         self.assertEqual(len(self.map), 1)
@@ -31,6 +37,8 @@ class MapTestMixin(unittest.TestCase):
         self.assertEqual(len(self.map), 0)
 
     def test_raise_key_error(self):
+        """ Docstring """
+
         self.map[1] = 10
         self.map[2] = 20
         self.map[3] = 30
@@ -47,10 +55,14 @@ class MapTestMixin(unittest.TestCase):
 
 
 class HashMapTest(MapTestMixin, unittest.TestCase):
+    """ Docstring """
+
     def setUp(self):
         self.map = HashMap()
 
     def test_resize(self):
+        """ Docstring """
+
         self.map = HashMap()
         self.map[1] = 10
         self.map[2] = 10
@@ -75,10 +87,14 @@ class HashMapTest(MapTestMixin, unittest.TestCase):
 
 
 class TreeMapTest(MapTestMixin, unittest.TestCase):
+    """ Docstring """
+
     def setUp(self):
         self.map = TreeMap()
 
     def test_sort(self):
+        """ Docstring """
+
         self.map[2] = 10
         self.map[1] = 10
         self.map[4] = 10
@@ -86,6 +102,7 @@ class TreeMapTest(MapTestMixin, unittest.TestCase):
         self.assertEqual(list(self.map.sorted_range()), [
             (1, 10), (2, 10), (3, 10), (4, 10)
         ])
+
 
 if __name__ == '__main__':
     unittest.main()

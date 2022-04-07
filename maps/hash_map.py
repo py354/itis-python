@@ -1,11 +1,11 @@
 """ Реализация Map на основе хеш-таблицы из ячеек LinkedList """
 
 from typing import List
-from interfaces import Map
-from linked_list import LinkedList
+from maps.base_map import BaseMap
+from maps.linked_list import LinkedList
 
 
-class HashMap(Map):
+class HashMap(BaseMap):
     """ Реализация Map на основе хеш-таблицы из ячеек LinkedList """
 
     LOAD_FACTOR_TO_INCREASE = 0.75
@@ -27,6 +27,7 @@ class HashMap(Map):
         new_buckets = [LinkedList() for _ in range(capacity)]
         for key, value in self:
             new_buckets[hash(key) % capacity].append(key, value)
+        self.buckets = new_buckets
 
     def __setitem__(self, key, value):
         """ Добавление или изменение элемента по ключу """
@@ -62,3 +63,8 @@ class HashMap(Map):
 
     def __len__(self):
         return self.length
+
+    def clear(self):
+        self.length = 0
+        self.capacity = 10
+        self.buckets: List[LinkedList] = [LinkedList() for _ in range(self.capacity)]

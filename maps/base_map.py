@@ -25,7 +25,7 @@ class BaseMap(ABC):
 
     def __contains__(self, key: str) -> bool:
         try:
-            self.__getitem__(key)
+            _ = self[key]
             return True
         except KeyError:
             return False
@@ -48,15 +48,18 @@ class BaseMap(ABC):
 
     def items(self) -> Iterable[Tuple[str, Union[int, str]]]:
         """ Возвращает данные словаря """
-        return list(self)
+        for pair in self:
+            yield pair
 
     def values(self) -> Iterable[Union[int, str]]:
         """ Возвращает значения словаря """
-        return [i[1] for i in self]
+        for pair in self:
+            yield pair[1]
 
     def keys(self) -> Iterable[str]:
         """ Возвращает ключи словаря """
-        return [i[0] for i in self]
+        for pair in self:
+            yield pair[0]
 
     @classmethod
     def fromkeys(cls, iterable, value=None) -> 'BaseMap':

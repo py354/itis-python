@@ -1,10 +1,10 @@
 """ Реализация Map с бинарным деревом """
 
 from typing import Optional, Iterable
-from interfaces import Map
+from maps.base_map import BaseMap
 
 
-class TreeNode(Map):
+class TreeNode:
     """ Реализация узла бинарного дерева """
 
     def __init__(self, key, value):
@@ -107,7 +107,7 @@ class TreeNode(Map):
         return new_node
 
 
-class TreeMap(Map):
+class TreeMap(BaseMap):
     """ Реализация Map с бинарным деревом (обертка над TreeNode) """
     def __init__(self):
         self.root: Optional[TreeNode] = None
@@ -154,3 +154,7 @@ class TreeMap(Map):
             return self.root.sorted_range()
         return iter([])
     __iter__ = sorted_range
+
+    def clear(self):
+        """ Оптимизация """
+        self.root = None

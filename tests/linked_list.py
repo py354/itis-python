@@ -1,7 +1,7 @@
 """ Тесты для LinkedList """
 
 import unittest
-from containers.linked_list import LinkedList
+from maps.linked_list import LinkedList
 
 
 class LinkedListTest(unittest.TestCase):

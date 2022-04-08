@@ -2,8 +2,8 @@
 
 import unittest
 
-from containers.hash_map import HashMap
-from containers.tree_map import TreeMap
+from maps.hash_map import HashMap
+from maps.tree_map import TreeMap
 
 
 class MapTestMixin(unittest.TestCase):
@@ -64,25 +64,25 @@ class HashMapTest(MapTestMixin, unittest.TestCase):
         """ Docstring """
 
         self.map = HashMap()
-        self.map[1] = 10
-        self.map[2] = 10
-        self.map[3] = 10
-        self.map[4] = 10
-        self.map[5] = 10
-        self.map[6] = 10
-        self.map[7] = 10
+        self.map['1'] = 10
+        self.map['2'] = 10
+        self.map['3'] = 10
+        self.map['4'] = 10
+        self.map['5'] = 10
+        self.map['6'] = 10
+        self.map['7'] = 10
         self.assertEqual(self.map.capacity, 10)  # load 70%
 
-        self.map[8] = 10
+        self.map['8'] = 10
         self.assertEqual(self.map.capacity, 20)  # increase capacity (load > 0.75)
 
-        del self.map[1]
-        del self.map[2]
-        del self.map[3]
-        del self.map[4]
-        del self.map[5]
-        del self.map[6]
-        del self.map[7]
+        del self.map['1']
+        del self.map['2']
+        del self.map['3']
+        del self.map['4']
+        del self.map['5']
+        del self.map['6']
+        del self.map['7']
         self.assertEqual(self.map.capacity, 10)  # decrease capacity (load < 0.1)
 
 
@@ -95,12 +95,12 @@ class TreeMapTest(MapTestMixin, unittest.TestCase):
     def test_sort(self):
         """ Docstring """
 
-        self.map[2] = 10
-        self.map[1] = 10
-        self.map[4] = 10
-        self.map[3] = 10
+        self.map['2'] = 10
+        self.map['1'] = 10
+        self.map['4'] = 10
+        self.map['3'] = 10
         self.assertEqual(list(self.map.sorted_range()), [
-            (1, 10), (2, 10), (3, 10), (4, 10)
+            ('1', 10), ('2', 10), ('3', 10), ('4', 10)
         ])
 
 

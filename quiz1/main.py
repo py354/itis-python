@@ -215,3 +215,22 @@ print(Number(100) - Number(-200), 300)
 print(Number(-100) - Number(-200), 100)
 
 print(Number(0) + Number(0), 0)
+
+if __name__ == '__main__':
+    print('tests')
+    assert Number(100) + Number(200) == Number(300)
+    assert Number(100) + Number(-200) == Number(-100)
+    assert Number(-100) + Number(200) == Number(100)
+    assert Number(-100) + Number(-200) == Number(-300)
+
+    assert Number(100) - Number(200) == Number(-100)
+    assert Number(100) - Number(-200) == Number(300)
+    assert Number(-100) - Number(200) == Number(-300)
+    assert Number(-100) - Number(-200) == Number(100)
+
+    assert Number(0) + Number(0) == Number(0)
+
+    assert Number(200) > Number(100)
+    assert Number(200) > Number(-100)
+    assert Number(-100) < Number(200)
+    assert Number(-100) > Number(-200)

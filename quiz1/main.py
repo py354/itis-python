@@ -234,3 +234,4 @@ if __name__ == '__main__':
     assert Number(200) > Number(-100)
     assert Number(-100) < Number(200)
     assert Number(-100) > Number(-200)
+    assert Number(-100) == Number(-100)

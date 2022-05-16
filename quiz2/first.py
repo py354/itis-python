@@ -25,14 +25,12 @@ def get_user_id(username: str) -> int:
 
 def get_post_ids(user_id: int) -> List[int]:
     r = requests.get('https://jsonplaceholder.typicode.com/posts', params={'userId': user_id})
-    result = [post['id'] for post in r.json()]
-    return result
+    return [post['id'] for post in r.json()]
 
 
 def get_post_emails(post_id: int) -> List[str]:
     r = requests.get('https://jsonplaceholder.typicode.com/comments', params={'postId': post_id})
-    result = [comment['email'] for comment in r.json()]
-    return result
+    return [comment['email'] for comment in r.json()]
 
 
 if __name__ == '__main__':

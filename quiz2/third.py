@@ -10,28 +10,36 @@ write_to_file_semaphore = BoundedSemaphore(5)
 write_to_console_semaphore = BoundedSemaphore(1)
 
 
+# Декоратор-обертка для применения семафоров
+def semaphore_wrapper_maker(semaphore):
+    def semaphore_wrapper(f):
+        def wrapper(task_id):
+            semaphore.acquire()
+            f(task_id)
+            semaphore.release()
+        return wrapper
+    return semaphore_wrapper
+
+
+@semaphore_wrapper_maker(get_data_semaphore)
 def get_data(task_id):
-    get_data_semaphore.acquire()
     print(f"processing get_data({task_id})")
     time.sleep(random.randint(1, 3))
     print(f"completed get_data({task_id})")
-    get_data_semaphore.release()
 
 
+@semaphore_wrapper_maker(write_to_file_semaphore)
 def write_to_file(task_id):
-    write_to_file_semaphore.acquire()
     print(f"processing write_to_file({task_id})")
     time.sleep(random.randint(1, 5))
     print(f"completed write_to_file({task_id})")
-    write_to_file_semaphore.release()
 
 
+@semaphore_wrapper_maker(write_to_console_semaphore)
 def write_to_console(task_id):
-    write_to_console_semaphore.acquire()
     print(f"processing write_to_console({task_id})")
     time.sleep(random.randint(1, 5))
     print(f"completed write_to_console({task_id})")
-    write_to_console_semaphore.release()
 
 
 def handle_task(task_id):

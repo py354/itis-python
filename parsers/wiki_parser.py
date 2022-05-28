@@ -1,7 +1,8 @@
 """ Модуль для парсинга wikipedia """
 
 from typing import List
-from os.path import join
+from threading import Lock
+from os.path import join, exists
 from os import makedirs
 import re
 import uuid
@@ -53,6 +54,16 @@ def words_count(text: str) -> HashMap:
     return data
 
 
+data_lock = Lock()
+
+
+def get_urls(urls_filename: str) -> HashMap:
+    try:
+        return HashMap.read(urls_filename)
+    except FileNotFoundError:
+        return HashMap()
+
+
 def wiki_parser(url: str, base_path: str) -> List[str]:
     """
         Функция для парсинга страницы:
@@ -65,21 +76,19 @@ def wiki_parser(url: str, base_path: str) -> List[str]:
 
     urls_filename = join(base_path, 'urls.txt')
 
-    try:
-        urls = HashMap.read(urls_filename)
-    except FileNotFoundError:
-        urls = HashMap()
-
     # если страница уже спаршена
-    if url in urls:
-        page_dir = join(base_path, urls[url])
-        with open(join(page_dir, 'content'), 'rb') as file:
-            content = file.read()
-            return get_wiki_urls(content)
+    with data_lock:
+        urls = get_urls(urls_filename)
+        if url in urls:
+            page_dir = urls[url]
+            if not exists(join(page_dir, 'content')):
+                print('url', url, 'in urls', urls.to_string())
+            with open(join(page_dir, 'content'), 'rb') as file:
+                content = file.read()
+                return get_wiki_urls(content)
 
     # создаем папку под данные
     page_dir = uuid.uuid4().hex
-    urls[url] = page_dir
     page_dir = join(base_path, page_dir)
     makedirs(page_dir)
 
@@ -95,7 +104,10 @@ def wiki_parser(url: str, base_path: str) -> List[str]:
     words.write(join(page_dir, 'words.txt'))
 
     # сохраняем url в список спаршенных url и возвращаем ссылки
-    urls.write(urls_filename)
+    with data_lock:
+        urls = get_urls(urls_filename)
+        urls[url] = page_dir
+        urls.write(urls_filename)
     return links
 
 
